@@ -1,0 +1,137 @@
+.content-container {
+    max-width: 1000px;
+    margin: var(--spacing-sm) auto var(--spacing-xl) auto;
+    padding: var(--spacing-lg);
+    background-color: var(--color-background-transparent);
+    border-radius: var(--border-radius-lg);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 15px var(--color-shadow);
+}
+
+.storia-section {
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-primary);
+    text-align: center;
+}
+
+.storia-section h3 {
+    font-size: 32px;
+    margin-bottom: var(--spacing-md);
+    font-weight: bold;
+}
+
+.storia-section p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+}
+
+.team-section {
+    color: var(--color-primary);
+    text-align: center;
+}
+
+.team-section h3 {
+    font-size: 32px;
+    margin-bottom: var(--spacing-lg);
+    font-weight: bold;
+}
+
+.team-container {
+    justify-content: center;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.team-card {
+    background-color: var(--color-background-transparent);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: 0 5px 15px var(--color-shadow);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    height: 100%;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--color-shadow-darker);
+}
+
+.team-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.team-info {
+    padding: var(--spacing-md);
+}
+
+.team-info h4 {
+    margin-bottom: var(--spacing-sm);
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.team-info p {
+    color: var(--color-primary);
+    line-height: 1.5;
+}
+
+footer {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-md);
+    color: var(--color-primary);
+    font-size: 14px;
+}
+
+/* Adattamenti per dark mode */
+.dark-mode .content-container {
+    background-color: var(--color-background-transparent-dark);
+}
+
+.dark-mode .team-card {
+    background-color: var(--color-background-transparent-dark);
+    border-color: var(--color-border-dark-mode);
+}
+
+.dark-mode .team-info p {
+    color: var(--color-primary-dark);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .team-container {
+        gap: var(--spacing-md);
+    }
+
+    .team-card {
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .team-card img {
+        height: 200px;
+    }
+
+    .content-container {
+        padding: var(--spacing-md);
+    }
+}
+
+@media (max-width: 576px) {
+    .team-card img {
+        height: 180px;
+    }
+
+    .storia-section h3,
+    .team-section h3 {
+        font-size: 28px;
+    }
+
+    .storia-section p {
+        font-size: 16px;
+    }
+}
