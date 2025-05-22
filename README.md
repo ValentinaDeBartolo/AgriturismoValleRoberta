@@ -45,7 +45,7 @@ Il sito include diverse sezioni chiave che dimostrano la capacità di strutturar
 
 Il progetto è organizzato nelle seguenti cartelle principali:
 
-\`\`\`
+```
 .
 ├── sections/                 # Contiene i file HTML delle varie sezioni del sito
 │   ├── agriturismo_valle_roberta.html
@@ -75,7 +75,7 @@ Il progetto è organizzato nelle seguenti cartelle principali:
 │   └── musica.mp4
 ├── .gitignore                # File per ignorare file e cartelle in Git
 └── index.html                # Pagina di reindirizzamento alla homepage principale
-\`\`\`
+```
 
 ---
 
