@@ -119,12 +119,13 @@ window.onload = function () {
             localStorage.setItem('darkMode', isDark);
 
             // AGGIORNAMENTO AGGIUNTO PER IL POPUP DELLA PASSWORD
-            const passwordPopupOverlay = $('#passwordPopupOverlay');
-            if (passwordPopupOverlay.hasClass('show')) {
+            const passwordPopupOverlay = document.getElementById('passwordPopupOverlay'); // Modificato: da $ a document.getElementById
+            if (passwordPopupOverlay && passwordPopupOverlay.classList.contains('show')) { // Modificato: da .hasClass('show') a .classList.contains('show')
+                const passwordPopupContent = passwordPopupOverlay.querySelector('.password-popup-content'); // Modificato: da .find a querySelector
                 if (isDark) {
-                    passwordPopupOverlay.find('.password-popup-content').addClass('dark-mode');
+                    passwordPopupContent.classList.add('dark-mode'); // Modificato: da .addClass a .classList.add
                 } else {
-                    passwordPopupOverlay.find('.password-popup-content').removeClass('dark-mode');
+                    passwordPopupContent.classList.remove('dark-mode'); // Modificato: da .removeClass a .classList.remove
                 }
             }
         });
@@ -162,7 +163,7 @@ window.onload = function () {
         });
     }
 
-    // Form di prenotazione 
+    // Form di prenotazione
     const formPrenotazione = document.getElementById("formPrenotazione");
     if (formPrenotazione) {
         formPrenotazione.addEventListener("submit", function (event) {
@@ -208,7 +209,7 @@ window.onload = function () {
         });
     }
 
-    // Imposta la data minima per arrivo e partenza 
+    // Imposta la data minima per arrivo e partenza
     var oggi = new Date();
     var anno = oggi.getFullYear();
     var mese = String(oggi.getMonth() + 1).padStart(2, '0');
@@ -235,27 +236,29 @@ window.onload = function () {
         });
     }
 
-    // Evidenzia pagina attiva menu 
-    $(".menu a").each(function () {
-        let linkPath = $(this).attr("href").split("/").pop();
+    // Evidenzia pagina attiva menu
+    const menuLinks = document.querySelectorAll(".menu a"); // Modificato: da $ a document.querySelectorAll
+    menuLinks.forEach(function (link) { // Modificato: da .each a .forEach
+        let linkPath = link.getAttribute("href").split("/").pop(); // Modificato: da $(this).attr("href") a link.getAttribute("href")
         let currentPath = window.location.pathname.split("/").pop();
 
         if (currentPath === linkPath) {
-            $(this).parent().addClass("active-link");
+            link.closest("li").classList.add("active-link"); // Modificato: da $(this).parent().addClass("active-link") a link.closest("li").classList.add
         }
     });
 
-    // Logo hover 
-    $("#logo").hover(
-        function () {
-            $(this).css("transform", "scale(1.05)");
-        },
-        function () {
-            $(this).css("transform", "scale(1)");
-        }
-    );
+    // Logo hover
+    const logo = document.getElementById("logo"); // Modificato: da $ a document.getElementById
+    if (logo) {
+        logo.addEventListener("mouseenter", function () { // Modificato: da .hover a .addEventListener
+            this.style.transform = "scale(1.05)"; // Modificato: da .css a .style.transform
+        });
+        logo.addEventListener("mouseleave", function () { // Modificato: da .hover a .addEventListener
+            this.style.transform = "scale(1)"; // Modificato: da .css a .style.transform
+        });
+    }
 
-    // Funzionalità per la dropdown dei servizi 
+    // Funzionalità per la dropdown dei servizi
     setupDropdownServizi();
     function setupDropdownServizi() {
         var elencoServizi = document.getElementById("elencoServizi");
@@ -287,7 +290,7 @@ window.onload = function () {
         }
     }
 
-    // Funzionalità carosello 
+    // Funzionalità carosello
     setupCarosello();
     function setupCarosello() {
         const carosello = document.querySelector('.carosello');
