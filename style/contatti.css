@@ -33,7 +33,6 @@
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius-sm);
     background-color: var(--color-background-light);
-    /* Light background for input */
     color: var(--color-primary);
     transition: all var(--transition-speed) ease;
 }
@@ -42,7 +41,6 @@
 .dark-mode .contact-form input[type="email"],
 .dark-mode .contact-form textarea {
     background-color: var(--color-background-dark);
-    /* Dark background for input */
     border-color: var(--color-border-dark-mode);
     color: var(--color-primary-dark);
 }
@@ -353,11 +351,11 @@
     transition: background-color var(--transition-speed) ease;
 }
 
-/* Override colori Bootstrap con le tue variabili per i bottoni */
+/* Override colori Bootstrap con le variabili per i bottoni */
 .portfolio-item .btn-primary {
     background-color: var(--color-primary);
     border-color: var(--color-primary);
-    color: var(--color-text-light);
+    color: var(--color-primary);
 }
 
 .portfolio-item .btn-primary:hover {
@@ -452,5 +450,8 @@
 @media (max-width: 768px) {
     .portfolio-items {
         grid-template-columns: 1fr;
+        margin-left: auto;
+        margin-right: auto;
+        width: 90%;
     }
 }

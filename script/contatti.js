@@ -7,7 +7,7 @@ $(document).ready(function () {
     const portfolioPage = "portfolio_privato.html"; // Nome del file HTML del portfolio
 
     // Aggiungi il markup del popup al body una volta che il DOM è pronto
-    // Questo assicura che il popup esista prima di provare a manipolarlo
+    // Assicura che il popup esista prima di provare a manipolarlo
     $('body').append(`
         <div class="password-popup-overlay" id="passwordPopupOverlay">
             <div class="password-popup-content">
@@ -45,7 +45,7 @@ $(document).ready(function () {
     }
 
     // Gestore click per il pulsante "Accedi al Portfolio"
-    if (showPortfolioBtn.length) { // Assicurati che il pulsante esista
+    if (showPortfolioBtn.length) {
         showPortfolioBtn.on('click', function () {
             showPopup();
         });
@@ -78,7 +78,7 @@ $(document).ready(function () {
     // Gestore tasto "Invio" sul campo password
     if (passwordInput.length) {
         passwordInput.on('keypress', function (e) {
-            if (e.which === 13) { // 13 è il codice per il tasto Invio
+            if (e.which === 13) {
                 submitPasswordBtn.click(); // Simula un click sul pulsante Accedi
             }
         });

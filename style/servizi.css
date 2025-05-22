@@ -11,14 +11,11 @@
 
 .servizio-box {
     background-color: var(--color-background-transparent);
-    /* Usa variabile per trasparenza */
     border: 1px solid var(--color-border);
-    /* Usa variabile per bordo */
     border-radius: var(--border-radius-lg);
     padding: var(--spacing-lg);
     text-align: center;
     box-shadow: 0 4px 15px var(--color-shadow);
-    /* Usa variabile per ombra */
     transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
     display: flex;
     flex-direction: column;
@@ -31,7 +28,6 @@
 .servizio-box:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px var(--color-shadow-darker);
-    /* Usa variabile per ombra più scura */
 }
 
 .servizio-box i {
@@ -62,11 +58,8 @@
 /* Stili specifici per la Dark mode */
 .dark-mode .servizio-box {
     background-color: var(--color-background-transparent-dark);
-    /* Variante scura per trasparenza */
     border-color: var(--color-border-dark-mode);
-    /* Variante scura per bordo */
     box-shadow: 0 4px 15px var(--color-shadow-dark);
-    /* Variante scura per ombra */
 }
 
 .dark-mode .servizio-box:hover {
@@ -78,7 +71,6 @@
 .dark-mode .servizio-box h3,
 .dark-mode .servizio-box p {
     color: var(--color-primary-dark);
-    /* Testo e icone di colore principale scuro */
 }
 
 footer {
