@@ -83,6 +83,8 @@ Per visualizzare il progetto, non è richiesta alcuna installazione di dipendenz
 sBasta accedere al seguente indirizzo:
 https://valentinadebartolo.github.io/AgriturismoValleRoberta/
 
+Per visualizzare il portfolio, è possibile accedere inserendo la seguente password: Valentina .
+
 ---
 
 ## Cosa Ho Imparato e Messo in Pratica
