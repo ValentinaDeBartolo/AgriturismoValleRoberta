@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contatti - Agriturismo Valle Roberta</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <link rel="stylesheet" href="../style/agr_valle_roberta.css">
+    <link rel="stylesheet" href="../style/chi_siamo.css">
+    <link rel="stylesheet" href="../style/contatti.css">
+</head>
+
+<body>
+    <button class="theme-toggle" id="themeToggle" aria-label="Attiva/Disattiva Dark Mode">
+        <span id="themeIcon">☾</span>
+    </button>
+
+    <div class="container">
+        <h1 id="titolo">Agriturismo Valle Roberta</h1>
+        <img src="../Logo/logo.png" alt="Logo Agriturismo Valle Roberta" id="logo" />
+
+        <div class="hamburger-menu">
+            <div class="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <nav class="menu">
+            <ul>
+                <li class="boxPulsanti"><a href="../sections/agriturismo_valle_roberta.html">HOME</a></li>
+                <li class="boxPulsanti"><a href="../sections/chi_siamo.html">CHI SIAMO</a></li>
+                <li class="boxPulsanti"><a href="../sections/servizi.html">SERVIZI</a></li>
+                <li class="boxPulsanti"><a href="../sections/contatti.html">CONTATTI</a></li>
+            </ul>
+        </nav>
+
+        <div class="boxSottotitolo">
+            <h2>CONTATTI</h2>
+        </div>
+
+        <div class="content-container">
+            <p>Per contattarci, utilizza il modulo sottostante o i recapiti.</p>
+            <form class="contact-form">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Messaggio:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+
+                <button type="submit">Invia Messaggio</button>
+            </form>
+
+            <div class="contact-info">
+                <h3>Oppure contattaci direttamente:</h3>
+                <p><i class="fa-solid fa-phone"></i> Telefono: +39 0123 456789</p>
+                <p><i class="fa-solid fa-envelope"></i> Email: info@agriturismovallerob.it</p>
+                <p><i class="fa-solid fa-map-marker-alt"></i> Indirizzo: Via dell'Agriturismo, 10 - 00100 Roma, Italia
+                </p>
+            </div>
+
+            <p style="text-align: center; margin-top: 30px;">
+                Se sei interessato a vedere il mio portfolio personale, clicca qui:
+                <button id="showPortfolioBtn" class="portfolio-button">Accedi al Portfolio</button>
+            </p>
+        </div>
+
+        <footer>
+            <small>© 2025 Agriturismo Valle Roberta - Tutti i diritti riservati</small>
+        </footer>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-QNVLjF6g4+z7YQ26tCAYX7I1kZbfiPqH3m6GKNWIsrLfaSrH5H3+giERJrZtflJp" crossorigin="anonymous">
+        </script>
+
+    <script src="../script/agr_valle_roberta.js"></script>
+    <script src="../script/contatti.js"></script>
+</body>
+
+</html>

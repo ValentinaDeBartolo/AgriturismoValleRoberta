@@ -517,6 +517,20 @@ button:hover {
     backdrop-filter: blur(4px);
 }
 
+/* Footer styles (copied from chi_siamo.css if not globally defined in agr_valle_roberta.css) */
+footer {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-md);
+    color: var(--color-primary);
+    font-size: 14px;
+}
+
+/* Adattamenti per dark mode per il footer */
+.dark-mode footer {
+    color: var(--color-primary-dark);
+}
+
 @media (max-width: 760px) {
     #logo {
         width: 40%;

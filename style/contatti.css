@@ -1,0 +1,456 @@
+.content-container p {
+    color: var(--color-primary);
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: var(--spacing-lg);
+    background-color: var(--color-background-transparent);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 4px 15px var(--color-shadow);
+    color: var(--color-primary);
+}
+
+.dark-mode .contact-form {
+    background-color: var(--color-background-transparent-dark);
+    box-shadow: 0 4px 15px var(--color-shadow-dark);
+    color: var(--color-primary-dark);
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: bold;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    background-color: var(--color-background-light);
+    /* Light background for input */
+    color: var(--color-primary);
+    transition: all var(--transition-speed) ease;
+}
+
+.dark-mode .contact-form input[type="text"],
+.dark-mode .contact-form input[type="email"],
+.dark-mode .contact-form textarea {
+    background-color: var(--color-background-dark);
+    /* Dark background for input */
+    border-color: var(--color-border-dark-mode);
+    color: var(--color-primary-dark);
+}
+
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(var(--color-secondary-rgb), 0.2);
+}
+
+.dark-mode .contact-form input[type="text"]:focus,
+.dark-mode .contact-form input[type="email"]:focus,
+.dark-mode .contact-form textarea:focus {
+    border-color: var(--color-secondary-dark-mode);
+    box-shadow: 0 0 0 3px rgba(var(--color-secondary-dark-mode-rgb), 0.2);
+}
+
+
+.contact-form button {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.contact-form button:hover {
+    background-color: var(--color-secondary-dark);
+}
+
+.dark-mode .contact-form button {
+    background-color: var(--color-secondary-dark-mode);
+    color: var(--color-primary-dark);
+}
+
+.dark-mode .contact-form button:hover {
+    background-color: var(--color-secondary-dark-dark-mode);
+}
+
+.contact-info {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-background-transparent);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 4px 15px var(--color-shadow);
+    color: var(--color-primary);
+}
+
+.dark-mode .contact-info {
+    background-color: var(--color-background-transparent-dark);
+    box-shadow: 0 4px 15px var(--color-shadow-dark);
+    color: var(--color-primary-dark);
+}
+
+.contact-info h3 {
+    margin-bottom: var(--spacing-md);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.contact-info p {
+    font-size: 18px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.contact-info i {
+    margin-right: 10px;
+    color: var(--color-secondary);
+}
+
+.dark-mode .contact-info i {
+    color: var(--color-secondary-dark-mode);
+}
+
+/* --- Stili per il popup della password --- */
+
+.password-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.password-popup-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.password-popup-content {
+    background-color: var(--color-background-light);
+    color: var(--color-primary);
+    padding: 30px;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.password-popup-overlay.show .password-popup-content {
+    transform: translateY(0);
+}
+
+.dark-mode .password-popup-content {
+    background-color: var(--color-background-dark);
+    color: var(--color-primary-dark);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+}
+
+.password-popup-content h3 {
+    margin-top: 0;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+.dark-mode .password-popup-content h3 {
+    color: var(--color-primary-dark);
+}
+
+.password-popup-content input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    background-color: var(--color-background-light);
+    color: var(--color-primary);
+}
+
+.dark-mode .password-popup-content input[type="password"] {
+    background-color: var(--color-background-dark);
+    border-color: var(--color-border-dark-mode);
+    color: var(--color-primary-dark);
+}
+
+.password-popup-content button {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color var(--transition-speed) ease;
+    margin: 0 5px;
+}
+
+.password-popup-content button:hover {
+    background-color: var(--color-secondary-dark);
+}
+
+.dark-mode .password-popup-content button {
+    background-color: var(--color-secondary-dark-mode);
+    color: var(--color-primary-dark);
+}
+
+.dark-mode .password-popup-content button:hover {
+    background-color: var(--color-secondary-dark-dark-mode);
+}
+
+.portfolio-button {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+    padding: 8px 15px;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color var(--transition-speed) ease;
+    margin-left: 10px;
+}
+
+.portfolio-button:hover {
+    background-color: var(--color-secondary-dark);
+}
+
+.dark-mode .portfolio-button {
+    background-color: var(--color-secondary-dark-mode);
+    color: var(--color-primary-dark);
+}
+
+.dark-mode .portfolio-button:hover {
+    background-color: var(--color-secondary-dark-dark-mode);
+}
+
+/* Stili per il portfolio */
+.portfolio-section {
+    text-align: center;
+    padding: var(--spacing-lg);
+    color: var(--color-primary);
+}
+
+.dark-mode .portfolio-section {
+    color: var(--color-primary-dark);
+}
+
+.portfolio-section h3 {
+    font-size: 28px;
+    margin-bottom: var(--spacing-md);
+    font-weight: bold;
+}
+
+.portfolio-section p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xl);
+}
+
+.portfolio-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    justify-content: center;
+    align-items: stretch;
+    margin-top: var(--spacing-lg);
+}
+
+.portfolio-item {
+    background-color: var(--color-background-transparent);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    text-align: center;
+    box-shadow: 0 4px 15px var(--color-shadow);
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--color-shadow-darker);
+}
+
+.dark-mode .portfolio-item {
+    background-color: var(--color-background-transparent-dark);
+    border-color: var(--color-border-dark-mode);
+    box-shadow: 0 4px 15px var(--color-shadow-dark);
+}
+
+.dark-mode .portfolio-item:hover {
+    box-shadow: 0 8px 20px var(--color-shadow-darker-dark);
+}
+
+.portfolio-item .portfolio-icon {
+    font-size: 60px;
+    /* Icona più grande */
+    margin-bottom: var(--spacing-md);
+    color: var(--color-secondary);
+    /* Colore secondario per le icone */
+}
+
+.dark-mode .portfolio-item .portfolio-icon {
+    color: var(--color-secondary-dark-mode);
+}
+
+.portfolio-item h4 {
+    font-size: 20px;
+    margin-bottom: var(--spacing-sm);
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.dark-mode .portfolio-item h4 {
+    color: var(--color-primary-dark);
+}
+
+.portfolio-item p {
+    font-size: 15px;
+    color: var(--color-primary);
+    line-height: 1.5;
+    flex-grow: 1;
+    margin-bottom: var(--spacing-md);
+}
+
+.dark-mode .portfolio-item p {
+    color: var(--color-primary-dark);
+}
+
+.portfolio-item .btn {
+    /* Utilizza le classi Bootstrap per il bottone */
+    margin-top: auto;
+    /* Sposta il bottone in basso */
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: var(--border-radius-sm);
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color var(--transition-speed) ease;
+}
+
+/* Override colori Bootstrap con le tue variabili per i bottoni */
+.portfolio-item .btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-text-light);
+}
+
+.portfolio-item .btn-primary:hover {
+    background-color: var(--color-secondary-dark);
+    border-color: var(--color-secondary-dark);
+}
+
+.dark-mode .portfolio-item .btn-primary {
+    background-color: var(--color-secondary-dark-mode);
+    border-color: var(--color-secondary-dark-mode);
+    color: var(--color-primary-dark);
+}
+
+.dark-mode .portfolio-item .btn-primary:hover {
+    background-color: var(--color-secondary-dark-dark-mode);
+    border-color: var(--color-secondary-dark-dark-mode);
+}
+
+/* Stili per il modale della lettera di presentazione */
+.modal-content {
+    background-color: var(--color-background-light);
+    color: var(--color-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .modal-content {
+    background-color: var(--color-background-dark);
+    color: var(--color-primary-dark);
+    border-color: var(--color-border-dark-mode);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.dark-mode .modal-header {
+    border-bottom-color: var(--color-border-dark-mode);
+}
+
+.modal-title {
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+.dark-mode .modal-title {
+    color: var(--color-primary-dark);
+}
+
+.modal-body {
+    color: var(--color-primary);
+}
+
+.dark-mode .modal-body {
+    color: var(--color-primary-dark);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--color-border);
+}
+
+.dark-mode .modal-footer {
+    border-top-color: var(--color-border-dark-mode);
+}
+
+.modal-footer .btn-secondary {
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
+    color: var(--color-primary);
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: var(--color-secondary-dark);
+    border-color: var(--color-secondary-dark);
+}
+
+.dark-mode .modal-footer .btn-secondary {
+    background-color: var(--color-secondary-dark-mode);
+    border-color: var(--color-secondary-dark-mode);
+    color: var(--color-primary-dark);
+}
+
+.dark-mode .modal-footer .btn-secondary:hover {
+    background-color: var(--color-secondary-dark-dark-mode);
+    border-color: var(--color-secondary-dark-dark-mode);
+}
+
+
+/* Media Queries per la Responsiveness del Portfolio */
+@media (max-width: 768px) {
+    .portfolio-items {
+        grid-template-columns: 1fr;
+    }
+}

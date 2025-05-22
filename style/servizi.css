@@ -1,0 +1,109 @@
+.servizi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md);
+    justify-content: center;
+    align-items: stretch;
+    /* Assicura che le card abbiano la stessa altezza */
+}
+
+
+.servizio-box {
+    background-color: var(--color-background-transparent);
+    /* Usa variabile per trasparenza */
+    border: 1px solid var(--color-border);
+    /* Usa variabile per bordo */
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    text-align: center;
+    box-shadow: 0 4px 15px var(--color-shadow);
+    /* Usa variabile per ombra */
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Spinge il contenuto e il bottone agli estremi */
+    height: 100%;
+    /* Assicura che la card occupi l'intera altezza nella griglia */
+}
+
+.servizio-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--color-shadow-darker);
+    /* Usa variabile per ombra più scura */
+}
+
+.servizio-box i {
+    font-size: 48px;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary);
+    /* Icona del colore principale */
+}
+
+.servizio-box h3 {
+    font-size: 24px;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-primary);
+    /* Titolo del colore principale */
+    font-weight: bold;
+}
+
+.servizio-box p {
+    font-size: 16px;
+    color: var(--color-primary);
+    /* Testo del colore principale */
+    line-height: 1.5;
+    flex-grow: 1;
+    /* Permette al paragrafo di espandersi */
+    margin-bottom: var(--spacing-md);
+}
+
+/* Stili specifici per la Dark mode */
+.dark-mode .servizio-box {
+    background-color: var(--color-background-transparent-dark);
+    /* Variante scura per trasparenza */
+    border-color: var(--color-border-dark-mode);
+    /* Variante scura per bordo */
+    box-shadow: 0 4px 15px var(--color-shadow-dark);
+    /* Variante scura per ombra */
+}
+
+.dark-mode .servizio-box:hover {
+    box-shadow: 0 8px 20px var(--color-shadow-darker-dark);
+    /* Variante scura per ombra più scura */
+}
+
+.dark-mode .servizio-box i,
+.dark-mode .servizio-box h3,
+.dark-mode .servizio-box p {
+    color: var(--color-primary-dark);
+    /* Testo e icone di colore principale scuro */
+}
+
+footer {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-md);
+    color: var(--color-primary);
+    font-size: 14px;
+}
+
+/* Adattamenti per dark mode per il footer */
+.dark-mode footer {
+    color: var(--color-primary-dark);
+}
+
+/* Media Queries per la Responsiveness */
+@media (max-width: 768px) {
+    .servizi-grid {
+        grid-template-columns: 1fr;
+        /* Una colonna su schermi più piccoli */
+    }
+
+    .servizio-box {
+        width: 90%;
+        margin: 0 auto;
+        /* Centra le box */
+    }
+}
