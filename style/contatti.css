@@ -355,7 +355,7 @@
 .portfolio-item .btn-primary {
     background-color: var(--color-primary);
     border-color: var(--color-primary);
-    color: var(--color-primary);
+    color: var(--color-text-light);
 }
 
 .portfolio-item .btn-primary:hover {
@@ -453,5 +453,10 @@
         margin-left: auto;
         margin-right: auto;
         width: 90%;
+    }
+
+    .content-container {
+        width: 90%;
+        margin: 0 auto;
     }
 }
