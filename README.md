@@ -62,17 +62,24 @@ Il progetto è organizzato nelle seguenti cartelle principali:
 │   ├── agr_valle_roberta.js
 │   ├── contatti.js
 │   └── servizi.js
-├── Logo/                     # Contiene il logo del sito
+├── Logo/                     # Contiene il logo e immagini di sfondo
+│   ├── background.png
 │   └── logo.png
 ├── immCarosello/             # Immagini utilizzate nel carosello della homepage
-│   ├── img1.jpg
-│   ├── img2.jpg
-│   └── img3.jpg
+│   ├── foto1.jpg
+│   ├── foto2.jpg
+│   ├── foto3.jpg
+│   ├── foto4.jpg
+│   ├── foto5.jpg
+│   └── foto6.jpg
 ├── immChiSiamo/              # Immagini per la sezione "Chi Siamo"
-│   ├── vero.png
-│   └── vale.jpg
+│   ├── robi.png
+│   ├── vale.jpg
+│   └── vero.png
 ├── musicaDiSfondo/           # File audio per la homepage
 │   └── musica.mp4
+├── cv/                       # Contiene il tuo curriculum vitae
+│   └── CV_De Bartolo Valentina.pdf
 ├── .gitignore                # File per ignorare file e cartelle in Git
 └── index.html                # Pagina di reindirizzamento alla homepage principale
 ```
