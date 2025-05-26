@@ -237,24 +237,24 @@ window.onload = function () {
     }
 
     // Evidenzia pagina attiva menu
-    const menuLinks = document.querySelectorAll(".menu a"); // Modificato: da $ a document.querySelectorAll
-    menuLinks.forEach(function (link) { // Modificato: da .each a .forEach
-        let linkPath = link.getAttribute("href").split("/").pop(); // Modificato: da $(this).attr("href") a link.getAttribute("href")
+    const menuLinks = document.querySelectorAll(".menu a");
+    menuLinks.forEach(function (link) {
+        let linkPath = link.getAttribute("href").split("/").pop();
         let currentPath = window.location.pathname.split("/").pop();
 
         if (currentPath === linkPath) {
-            link.closest("li").classList.add("active-link"); // Modificato: da $(this).parent().addClass("active-link") a link.closest("li").classList.add
+            link.closest("li").classList.add("active-link");
         }
     });
 
     // Logo hover
-    const logo = document.getElementById("logo"); // Modificato: da $ a document.getElementById
+    const logo = document.getElementById("logo");
     if (logo) {
-        logo.addEventListener("mouseenter", function () { // Modificato: da .hover a .addEventListener
-            this.style.transform = "scale(1.05)"; // Modificato: da .css a .style.transform
+        logo.addEventListener("mouseenter", function () {
+            this.style.transform = "scale(1.05)";
         });
-        logo.addEventListener("mouseleave", function () { // Modificato: da .hover a .addEventListener
-            this.style.transform = "scale(1)"; // Modificato: da .css a .style.transform
+        logo.addEventListener("mouseleave", function () {
+            this.style.transform = "scale(1)";
         });
     }
 
@@ -371,6 +371,72 @@ window.onload = function () {
             } else if (touchEndX - touchStartX > swipeThreshold) {
                 goToSlide(currentIndex - 1);
             }
+        }
+    }
+
+    // --- NUOVA LOGICA PER I BOTTONI "SEI CLIENTE?" ---
+
+    const btnSi = document.getElementById("btnSi");
+    const btnNo = document.getElementById("btnNo");
+    const verificaClienteSection = document.querySelector(".verifica-cliente"); // La sezione con i bottoni Sì/No
+    const sceltaRegistrazioneSection = document.getElementById("sceltaRegistrazione"); // La sezione "Registrati o Continua"
+    const registrazioneSection = document.getElementById("registrazione"); // La sezione del form di registrazione
+    const loginSection = document.getElementById("login"); // La sezione del form di login
+    const sezionePrenotazioneSection = document.getElementById("sezionePrenotazione"); // La sezione del form di prenotazione
+
+    if (btnSi && btnNo && verificaClienteSection && sceltaRegistrazioneSection && registrazioneSection && loginSection && sezionePrenotazioneSection) {
+
+        // Inizialmente nascondi tutte le sezioni che devono essere mostrate dopo la scelta "Sì/No"
+        sceltaRegistrazioneSection.style.display = "none";
+        registrazioneSection.style.display = "none";
+        loginSection.style.display = "none";
+        sezionePrenotazioneSection.style.display = "none";
+
+
+        btnSi.addEventListener("click", function () {
+            // Nasconde la sezione "Sei già nostro cliente?"
+            verificaClienteSection.style.display = "none";
+            // Mostra la sezione di login
+            loginSection.style.display = "block";
+            // Nasconde altre sezioni per sicurezza
+            sceltaRegistrazioneSection.style.display = "none";
+            registrazioneSection.style.display = "none";
+            sezionePrenotazioneSection.style.display = "none";
+        });
+
+        btnNo.addEventListener("click", function () {
+            // Nasconde la sezione "Sei già nostro cliente?"
+            verificaClienteSection.style.display = "none";
+            // Mostra la sezione "Registrati o Continua come ospite"
+            sceltaRegistrazioneSection.style.display = "block";
+            // Nasconde altre sezioni per sicurezza
+            registrazioneSection.style.display = "none";
+            loginSection.style.display = "none";
+            sezionePrenotazioneSection.style.display = "none";
+        });
+
+        // Gestione dei bottoni nella sezione "sceltaRegistrazione"
+        const btnRegistrati = document.getElementById("btnRegistrati");
+        const btnOspite = document.getElementById("btnOspite");
+
+        if (btnRegistrati) {
+            btnRegistrati.addEventListener("click", function () {
+                sceltaRegistrazioneSection.style.display = "none"; // Nasconde la sezione di scelta
+                registrazioneSection.style.display = "block"; // Mostra il form di registrazione
+                // Nasconde altre sezioni per sicurezza
+                loginSection.style.display = "none";
+                sezionePrenotazioneSection.style.display = "none";
+            });
+        }
+
+        if (btnOspite) {
+            btnOspite.addEventListener("click", function () {
+                sceltaRegistrazioneSection.style.display = "none"; // Nasconde la sezione di scelta
+                sezionePrenotazioneSection.style.display = "block"; // Mostra il form di prenotazione
+                // Nasconde altre sezioni per sicurezza
+                registrazioneSection.style.display = "none";
+                loginSection.style.display = "none";
+            });
         }
     }
 };
