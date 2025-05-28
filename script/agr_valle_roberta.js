@@ -1,8 +1,11 @@
 window.onload = function () {
-    // Inizializzazione audio con volume basso
-    var audio = document.getElementById("audioDiSfondo");
-    if (audio) audio.volume = 0.05;
+    // Inizializzo l'audio di sottofondo con un volume basso.
+    const audio = document.getElementById("audioDiSfondo");
+    if (audio) {
+        audio.volume = 0.05;
+    }
 
+    // Qui definisco i servizi che offro. Così è facile aggiungere o togliere.
     window.servizi = [
         {
             nome: "Camera matrimoniale con vista panoramica",
@@ -70,39 +73,46 @@ window.onload = function () {
             icona: "fa-solid fa-paw"
         }
     ];
-    var elencoServizi = document.getElementById("elencoServizi");
-    var descrizioneServizio = document.getElementById("descrizioneServizio");
-    var dettagliServizio = document.getElementById("dettagliServizio");
+
+    // Gestione del dropdown dei servizi
+    const elencoServizi = document.getElementById("elencoServizi");
+    const descrizioneServizio = document.getElementById("descrizioneServizio");
+    const dettagliServizio = document.getElementById("dettagliServizio");
 
     if (elencoServizi) {
-        // Popola il menu a tendina dei servizi
-        for (var i = 0; i < servizi.length; i++) {
-            var option = document.createElement("option");
-            option.value = i;
-            option.text = servizi[i].nome;
+        // Popolo il menu a tendina con i servizi che ho definito sopra.
+        window.servizi.forEach((servizio, index) => {
+            const option = document.createElement("option");
+            option.value = index;
+            option.text = servizio.nome;
             elencoServizi.appendChild(option);
-        }
+        });
 
+        // Quando scelgo un servizio, mostro la sua descrizione.
         elencoServizi.onchange = function () {
-            var indice = elencoServizi.value;
+            const indice = elencoServizi.value;
             if (indice !== "") {
-                dettagliServizio.textContent = servizi[indice].descrizione;
+                dettagliServizio.textContent = window.servizi[indice].descrizione;
                 descrizioneServizio.style.display = "block";
             } else {
                 descrizioneServizio.style.display = "none";
             }
         };
 
-        // Inizializza la visualizzazione
+        // All'inizio, il dropdown è vuoto e la descrizione è nascosta.
         elencoServizi.value = "";
-        if (descrizioneServizio) descrizioneServizio.style.display = "none";
+        if (descrizioneServizio) {
+            descrizioneServizio.style.display = "none";
+        }
     }
-    // Gestione Dark Mode
+
+    // Funzione per la Dark Mode: voglio che l'utente scelga come navigare.
     setupDarkMode();
     function setupDarkMode() {
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
 
+        // Controllo se la dark mode è già attiva.
         const isDarkMode = localStorage.getItem('darkMode') === 'true';
 
         if (isDarkMode) {
@@ -110,28 +120,16 @@ window.onload = function () {
             themeIcon.textContent = '☼';
         }
 
+        // Al click, alterno la dark mode e salvo la preferenza.
         themeToggle.addEventListener('click', function () {
             document.body.classList.toggle('dark-mode');
-
             const isDark = document.body.classList.contains('dark-mode');
             themeIcon.textContent = isDark ? '☼' : '☾';
-
             localStorage.setItem('darkMode', isDark);
-
-            // AGGIORNAMENTO AGGIUNTO PER IL POPUP DELLA PASSWORD
-            const passwordPopupOverlay = document.getElementById('passwordPopupOverlay'); // Modificato: da $ a document.getElementById
-            if (passwordPopupOverlay && passwordPopupOverlay.classList.contains('show')) { // Modificato: da .hasClass('show') a .classList.contains('show')
-                const passwordPopupContent = passwordPopupOverlay.querySelector('.password-popup-content'); // Modificato: da .find a querySelector
-                if (isDark) {
-                    passwordPopupContent.classList.add('dark-mode'); // Modificato: da .addClass a .classList.add
-                } else {
-                    passwordPopupContent.classList.remove('dark-mode'); // Modificato: da .removeClass a .classList.remove
-                }
-            }
         });
 
+        // Se non ho preferenze salvate, uso quelle del sistema operativo.
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-
         if (localStorage.getItem('darkMode') === null) {
             if (prefersDarkScheme.matches) {
                 document.body.classList.add('dark-mode');
@@ -141,19 +139,19 @@ window.onload = function () {
         }
     }
 
-    // Gestione Hamburger Menu
+    // Gestione del menu hamburger per i dispositivi più piccoli.
     const hamburgerIcon = document.querySelector('.hamburger-icon');
     const menu = document.querySelector('.menu');
 
     if (hamburgerIcon && menu) {
         hamburgerIcon.addEventListener('click', () => {
             menu.classList.toggle('open');
-            hamburgerIcon.classList.toggle('open'); // Aggiunto per animare l'icona
+            hamburgerIcon.classList.toggle('open');
         });
 
-        // Chiudi il menu quando si clicca su un link
-        const menuLinks = document.querySelectorAll('.menu li a');
-        menuLinks.forEach(function (link) {
+        // Se clicco su un link nel menu, lo chiudo (comodo sul telefono).
+        const menuLinksMobile = document.querySelectorAll('.menu li a');
+        menuLinksMobile.forEach(function (link) {
             link.addEventListener('click', function () {
                 if (window.innerWidth <= 760) {
                     hamburgerIcon.classList.remove('open');
@@ -163,34 +161,44 @@ window.onload = function () {
         });
     }
 
-    // Form di prenotazione
+    // Logica per il form di prenotazione: valida i dati e mostra un riepilogo.
     const formPrenotazione = document.getElementById("formPrenotazione");
     if (formPrenotazione) {
         formPrenotazione.addEventListener("submit", function (event) {
-            event.preventDefault(); // Impedisce il ricaricamento della pagina
+            event.preventDefault(); // Non ricarico la pagina.
 
-            var nome = document.getElementById("nome").value.trim();
-            var email = document.getElementById("email").value.trim();
-            var telefono = document.getElementById("telefono").value.trim();
-            var persone = document.getElementById("persone").value.trim();
-            var arrivo = document.getElementById("arrivo").value.trim();
-            var partenza = document.getElementById("partenza").value.trim();
+            const nome = document.getElementById("nome").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const telefono = document.getElementById("telefono").value.trim();
+            const persone = document.getElementById("persone").value.trim();
+            const arrivo = document.getElementById("arrivo").value.trim();
+            const partenza = document.getElementById("partenza").value.trim();
 
+            // Controllo che il nome contenga solo lettere e spazi.
             if (!/^[A-Za-zÀ-ÿ\s]+$/.test(nome)) {
                 alert("Il nome può contenere solo lettere e spazi.");
                 return;
             }
 
+            // Controllo il formato del telefono.
             if (!/^[0-9\s+]+$/.test(telefono)) {
                 alert("Il numero di telefono deve contenere solo numeri, spazi e il simbolo +.");
                 return;
             }
 
+            // Controllo il formato dell'email.
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert("Per favore, inserisci un'email valida.");
+                return;
+            }
+
+            // Controllo che la data di partenza sia dopo quella di arrivo.
             if (new Date(partenza) <= new Date(arrivo)) {
                 alert("La data di partenza deve essere successiva alla data di arrivo.");
                 return;
             }
 
+            // Se tutto è a posto, mostro un riepilogo e resetto il form.
             if (nome && email && telefono && persone && arrivo && partenza) {
                 alert(
                     "Dati inseriti correttamente:\n" +
@@ -209,34 +217,40 @@ window.onload = function () {
         });
     }
 
-    // Imposta la data minima per arrivo e partenza
-    var oggi = new Date();
-    var anno = oggi.getFullYear();
-    var mese = String(oggi.getMonth() + 1).padStart(2, '0');
-    var giorno = String(oggi.getDate()).padStart(2, '0');
-    var dataMinima = anno + '-' + mese + '-' + giorno;
+    // Imposto le date minime per arrivo e partenza a partire da oggi.
+    const oggi = new Date();
+    const anno = oggi.getFullYear();
+    const mese = String(oggi.getMonth() + 1).padStart(2, '0');
+    const giorno = String(oggi.getDate()).padStart(2, '0');
+    const dataMinima = `${anno}-${mese}-${giorno}`;
 
-    var arrivoInput = document.getElementById("arrivo");
-    var partenzaInput = document.getElementById("partenza");
+    const arrivoInput = document.getElementById("arrivo");
+    const partenzaInput = document.getElementById("partenza");
 
-    if (arrivoInput) arrivoInput.min = dataMinima;
-    if (partenzaInput) partenzaInput.min = dataMinima;
+    if (arrivoInput) {
+        arrivoInput.min = dataMinima;
+    }
+    if (partenzaInput) {
+        partenzaInput.min = dataMinima;
+    }
 
+    // Aggiorno la data minima di partenza in base alla data di arrivo selezionata.
     if (arrivoInput && partenzaInput) {
         arrivoInput.addEventListener("change", function () {
-            var dataArrivoSelezionata = new Date(this.value);
-            dataArrivoSelezionata.setDate(dataArrivoSelezionata.getDate() + 1);
+            const dataArrivoSelezionata = new Date(this.value);
+            dataArrivoSelezionata.setDate(dataArrivoSelezionata.getDate() + 1); // La partenza deve essere almeno il giorno dopo.
 
-            var nuovaDataPartenzaMin = dataArrivoSelezionata.toISOString().split('T')[0];
+            const nuovaDataPartenzaMin = dataArrivoSelezionata.toISOString().split('T')[0];
             partenzaInput.min = nuovaDataPartenzaMin;
 
+            // Se la data di partenza è sbagliata, la correggo automaticamente.
             if (new Date(partenzaInput.value) <= new Date(this.value)) {
                 partenzaInput.value = nuovaDataPartenzaMin;
             }
         });
     }
 
-    // Evidenzia pagina attiva menu
+    // Evidenzio la pagina in cui mi trovo nel menu di navigazione.
     const menuLinks = document.querySelectorAll(".menu a");
     menuLinks.forEach(function (link) {
         let linkPath = link.getAttribute("href").split("/").pop();
@@ -247,7 +261,7 @@ window.onload = function () {
         }
     });
 
-    // Logo hover
+    // Effetto hover sul logo: voglio che si muova un po'.
     const logo = document.getElementById("logo");
     if (logo) {
         logo.addEventListener("mouseenter", function () {
@@ -258,39 +272,7 @@ window.onload = function () {
         });
     }
 
-    // Funzionalità per la dropdown dei servizi
-    setupDropdownServizi();
-    function setupDropdownServizi() {
-        var elencoServizi = document.getElementById("elencoServizi");
-        var descrizioneServizio = document.getElementById("descrizioneServizio");
-        var dettagliServizio = document.getElementById("dettagliServizio");
-
-        if (elencoServizi) {
-            // Popola il menu a tendina dei servizi
-            for (var i = 0; i < window.servizi.length; i++) {
-                var option = document.createElement("option");
-                option.value = i;
-                option.text = window.servizi[i].nome;
-                elencoServizi.appendChild(option);
-            }
-
-            elencoServizi.onchange = function () {
-                var indice = elencoServizi.value;
-                if (indice !== "") {
-                    dettagliServizio.textContent = window.servizi[indice].descrizione;
-                    descrizioneServizio.style.display = "block";
-                } else {
-                    descrizioneServizio.style.display = "none";
-                }
-            };
-
-            // Inizializza la visualizzazione
-            elencoServizi.value = "";
-            if (descrizioneServizio) descrizioneServizio.style.display = "none";
-        }
-    }
-
-    // Funzionalità carosello
+    // Gestione del carosello delle immagini.
     setupCarosello();
     function setupCarosello() {
         const carosello = document.querySelector('.carosello');
@@ -305,7 +287,7 @@ window.onload = function () {
         let currentIndex = 0;
         const totalSlides = slides.length;
 
-        // Crea i pallini per ogni immagine
+        // Creo i pallini sotto il carosello per navigare tra le immagini.
         slides.forEach((_, index) => {
             const dot = document.createElement('div');
             dot.classList.add('carosello-dot');
@@ -316,13 +298,14 @@ window.onload = function () {
 
         const dots = document.querySelectorAll('.carosello-dot');
 
-        // Funzione per andare a una slide specifica
+        // Funzione per cambiare slide del carosello.
         function goToSlide(index) {
             if (index < 0) index = totalSlides - 1;
             if (index >= totalSlides) index = 0;
 
             immagini.style.transform = `translateX(-${index * 100}%)`;
 
+            // Aggiorno il pallino attivo.
             dots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === index);
             });
@@ -330,35 +313,37 @@ window.onload = function () {
             currentIndex = index;
         }
 
+        // Listener per i pulsanti Avanti/Indietro del carosello.
         prevBtn.addEventListener('click', () => {
             goToSlide(currentIndex - 1);
         });
-
         nextBtn.addEventListener('click', () => {
             goToSlide(currentIndex + 1);
         });
 
+        // Carosello automatico: cambia slide ogni 5 secondi.
         let autoSlide = setInterval(() => {
             goToSlide(currentIndex + 1);
         }, 5000);
 
+        // Quando il mouse è sul carosello, fermo l'autoscroll.
         carosello.addEventListener('mouseenter', () => {
             clearInterval(autoSlide);
         });
-
+        // Quando il mouse esce, riparte l'autoscroll.
         carosello.addEventListener('mouseleave', () => {
             autoSlide = setInterval(() => {
                 goToSlide(currentIndex + 1);
             }, 5000);
         });
 
+        // Gestione dello swipe per i dispositivi touch.
         let touchStartX = 0;
         let touchEndX = 0;
 
         carosello.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
         });
-
         carosello.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
             handleSwipe();
@@ -374,19 +359,26 @@ window.onload = function () {
         }
     }
 
-    // --- NUOVA LOGICA PER I BOTTONI "SEI CLIENTE?" ---
-
+    // Gestione della sezione "Sei Cliente?" e dei form di registrazione/login.
     const btnSi = document.getElementById("btnSi");
     const btnNo = document.getElementById("btnNo");
-    const verificaClienteSection = document.querySelector(".verifica-cliente"); // La sezione con i bottoni Sì/No
-    const sceltaRegistrazioneSection = document.getElementById("sceltaRegistrazione"); // La sezione "Registrati o Continua"
-    const registrazioneSection = document.getElementById("registrazione"); // La sezione del form di registrazione
-    const loginSection = document.getElementById("login"); // La sezione del form di login
-    const sezionePrenotazioneSection = document.getElementById("sezionePrenotazione"); // La sezione del form di prenotazione
+    const verificaClienteSection = document.querySelector(".verifica-cliente");
+    const sceltaRegistrazioneSection = document.getElementById("sceltaRegistrazione");
+    const registrazioneSection = document.getElementById("registrazione");
+    const loginSection = document.getElementById("login");
+    const sezionePrenotazioneSection = document.getElementById("sezionePrenotazione");
+
+    const formRegistrazione = document.getElementById("formRegistrazione");
+    const formLogin = document.getElementById("formLogin");
+
+    // Simulo un piccolo "database" per gli utenti registrati.
+    const registeredUsers = [
+        { email: "valedb@gmail.com", password: "pass" }
+    ];
 
     if (btnSi && btnNo && verificaClienteSection && sceltaRegistrazioneSection && registrazioneSection && loginSection && sezionePrenotazioneSection) {
 
-        // Inizialmente nascondi tutte le sezioni che devono essere mostrate dopo la scelta "Sì/No"
+        // All'inizio, nascondo le sezioni che compaiono dopo la scelta "Sì/No".
         sceltaRegistrazioneSection.style.display = "none";
         registrazioneSection.style.display = "none";
         loginSection.style.display = "none";
@@ -394,36 +386,31 @@ window.onload = function () {
 
 
         btnSi.addEventListener("click", function () {
-            // Nasconde la sezione "Sei già nostro cliente?"
+            // Se dico "Sì", nascondo la domanda e mostro il form di login.
             verificaClienteSection.style.display = "none";
-            // Mostra la sezione di login
             loginSection.style.display = "block";
-            // Nasconde altre sezioni per sicurezza
             sceltaRegistrazioneSection.style.display = "none";
             registrazioneSection.style.display = "none";
             sezionePrenotazioneSection.style.display = "none";
         });
 
         btnNo.addEventListener("click", function () {
-            // Nasconde la sezione "Sei già nostro cliente?"
+            // Se dico "No", nascondo la domanda e mostro la scelta tra registrazione/ospite.
             verificaClienteSection.style.display = "none";
-            // Mostra la sezione "Registrati o Continua come ospite"
             sceltaRegistrazioneSection.style.display = "block";
-            // Nasconde altre sezioni per sicurezza
             registrazioneSection.style.display = "none";
             loginSection.style.display = "none";
             sezionePrenotazioneSection.style.display = "none";
         });
 
-        // Gestione dei bottoni nella sezione "sceltaRegistrazione"
         const btnRegistrati = document.getElementById("btnRegistrati");
         const btnOspite = document.getElementById("btnOspite");
 
         if (btnRegistrati) {
             btnRegistrati.addEventListener("click", function () {
-                sceltaRegistrazioneSection.style.display = "none"; // Nasconde la sezione di scelta
-                registrazioneSection.style.display = "block"; // Mostra il form di registrazione
-                // Nasconde altre sezioni per sicurezza
+                // Se voglio registrarmi, mostro il form di registrazione.
+                sceltaRegistrazioneSection.style.display = "none";
+                registrazioneSection.style.display = "block";
                 loginSection.style.display = "none";
                 sezionePrenotazioneSection.style.display = "none";
             });
@@ -431,11 +418,81 @@ window.onload = function () {
 
         if (btnOspite) {
             btnOspite.addEventListener("click", function () {
-                sceltaRegistrazioneSection.style.display = "none"; // Nasconde la sezione di scelta
-                sezionePrenotazioneSection.style.display = "block"; // Mostra il form di prenotazione
-                // Nasconde altre sezioni per sicurezza
+                // Se voglio continuare come ospite, mostro il form di prenotazione.
+                sceltaRegistrazioneSection.style.display = "none";
+                sezionePrenotazioneSection.style.display = "block";
                 registrazioneSection.style.display = "none";
                 loginSection.style.display = "none";
+            });
+        }
+
+        // Gestisco l'invio del form di registrazione.
+        if (formRegistrazione) {
+            formRegistrazione.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                const regNome = document.getElementById("regNome").value.trim();
+                const regEmail = document.getElementById("regEmail").value.trim();
+                const regPassword = document.getElementById("regPassword").value.trim();
+
+                // Controllo il formato dell'email.
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(regEmail)) {
+                    alert("Per favore, inserisci un'email valida per la registrazione.");
+                    return;
+                }
+
+                // Controllo la forza della password.
+                if (regPassword.length < 6 || !/[a-zA-Z]/.test(regPassword) || !/\d/.test(regPassword)) {
+                    alert("La password deve contenere almeno 6 caratteri, inclusi lettere e numeri.");
+                    return;
+                }
+
+                // Verifico se l'email è già usata (simulazione).
+                if (registeredUsers.some(user => user.email === regEmail)) {
+                    alert("Questa email è già registrata. Per favore, effettua l'accesso o usa un'altra email.");
+                    return;
+                }
+
+                if (regNome && regEmail && regPassword) {
+                    // Aggiungo il nuovo utente al mio "database" simulato.
+                    registeredUsers.push({ email: regEmail, password: regPassword });
+                    alert("Registrazione effettuata con successo per " + regNome + "!");
+                    // Dopo la registrazione, mostro il form di prenotazione.
+                    registrazioneSection.style.display = "none";
+                    sezionePrenotazioneSection.style.display = "block";
+                    formRegistrazione.reset();
+                } else {
+                    alert("Per favore, compila tutti i campi obbligatori per la registrazione.");
+                }
+            });
+        }
+
+        // Gestisco l'invio del form di login.
+        if (formLogin) {
+            formLogin.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                const loginEmail = document.getElementById("loginEmail").value.trim();
+                const loginPassword = document.getElementById("loginPassword").value.trim();
+
+                // Controllo il formato dell'email.
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginEmail)) {
+                    alert("Per favore, inserisci un'email valida per il login.");
+                    return;
+                }
+
+                // Simulazione dell'autenticazione.
+                const user = registeredUsers.find(u => u.email === loginEmail && u.password === loginPassword);
+
+                if (user) {
+                    alert("Login effettuato con successo!");
+                    // Dopo il login, mostro il form di prenotazione.
+                    loginSection.style.display = "none";
+                    sezionePrenotazioneSection.style.display = "block";
+                    formLogin.reset();
+                } else {
+                    alert("Email o password errati. Riprova.");
+                }
             });
         }
     }
