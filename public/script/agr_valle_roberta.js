@@ -117,23 +117,31 @@ window.onload = function () {
 
         if (isDarkMode) {
             document.body.classList.add('dark-mode');
-            themeIcon.textContent = '☼';
+            if (themeIcon) { // Controllo per assicurare che themeIcon esista
+                themeIcon.textContent = '☼';
+            }
         }
 
         // Al click, alterno la dark mode e salvo la preferenza.
-        themeToggle.addEventListener('click', function () {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            themeIcon.textContent = isDark ? '☼' : '☾';
-            localStorage.setItem('darkMode', isDark);
-        });
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function () {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                if (themeIcon) {
+                    themeIcon.textContent = isDark ? '☼' : '☾';
+                }
+                localStorage.setItem('darkMode', isDark);
+            });
+        }
 
         // Se non ho preferenze salvate, uso quelle del sistema operativo.
         const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
         if (localStorage.getItem('darkMode') === null) {
             if (prefersDarkScheme.matches) {
                 document.body.classList.add('dark-mode');
-                themeIcon.textContent = '☼';
+                if (themeIcon) {
+                    themeIcon.textContent = '☼';
+                }
                 localStorage.setItem('darkMode', 'true');
             }
         }
@@ -173,6 +181,7 @@ window.onload = function () {
             const persone = document.getElementById("persone").value.trim();
             const arrivo = document.getElementById("arrivo").value.trim();
             const partenza = document.getElementById("partenza").value.trim();
+            const note = document.getElementById("note") ? document.getElementById("note").value.trim() : ''; // Gestisce il caso notes non esista
 
             // Controllo che il nome contenga solo lettere e spazi.
             if (!/^[A-Za-zÀ-ÿ\s]+$/.test(nome)) {
@@ -198,25 +207,106 @@ window.onload = function () {
                 return;
             }
 
-            // Se tutto è a posto, mostro un riepilogo e resetto il form.
+            // Se tutto è a posto, invio i dati al backend
             if (nome && email && telefono && persone && arrivo && partenza) {
-                alert(
-                    "Dati inseriti correttamente:\n" +
-                    "Nome: " + nome + "\n" +
-                    "Email: " + email + "\n" +
-                    "Telefono: " + telefono + "\n" +
-                    "Persone: " + persone + "\n" +
-                    "Arrivo: " + arrivo + "\n" +
-                    "Partenza: " + partenza + "\n" +
-                    "Riceverai la conferma della prenotazione via email."
-                );
-                formPrenotazione.reset();
+                const datiPrenotazione = {
+                    name: nome,
+                    email: email,
+                    phone: telefono,
+                    people: parseInt(persone), // Converti in numero
+                    arrival: arrivo,
+                    departure: partenza,
+                    notes: note
+                };
+
+                fetch("http://localhost:3000/reservations", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(datiPrenotazione)
+                })
+                    .then(res => {
+                        if (!res.ok) {
+                            return res.json().then(errorData => {
+                                throw new Error(errorData.message || `Errore HTTP: ${res.status}`);
+                            });
+                        }
+                        return res.json();
+                    })
+                    .then(result => {
+                        if (result.success) {
+                            alert("Prenotazione inviata con successo!");
+                            formPrenotazione.reset(); // Pulisci il form dopo l'invio
+                        } else {
+                            alert(result.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Errore nell'invio della prenotazione:", error);
+                        alert("Si è verificato un errore durante l'invio della prenotazione: " + error.message);
+                    });
             } else {
                 alert("Per favore, compila tutti i campi obbligatori del modulo.");
             }
         });
     }
 
+    //"Mostra Prenotazioni" e DataTables 
+    const showReservationsBtn = document.getElementById('showReservationsBtn');
+    const reservationsTableContainer = document.getElementById('reservationsTableContainer');
+    let dataTableInstance = null; // riferimento all'istanza di DataTables
+
+    if (showReservationsBtn && reservationsTableContainer) {
+        showReservationsBtn.addEventListener('click', async () => {
+            reservationsTableContainer.style.display = 'block';
+
+            // Se DataTables non è ancora stato inizializzato
+            if (dataTableInstance === null) {
+                try {
+                    const response = await fetch('http://localhost:3000/api/reservations');
+                    const data = await response.json();
+
+                    if (data.success && data.reservations) {
+                        // Inizializza DataTables con i dati ricevuti
+                        dataTableInstance = new DataTable('#reservationsTable', {
+                            data: data.reservations,
+                            columns: [
+                                { data: 'id' },
+                                { data: 'nome' },
+                                { data: 'email' },
+                                { data: 'telefono' },
+                                { data: 'people' },
+                                { data: 'arrival' },
+                                { data: 'departure' },
+                                { data: 'notes' },
+                                {
+                                    data: 'created_at',
+                                    render: function (data) {
+                                        if (!data) return ''; // Gestisce il caso in cui created_at sia nullo
+                                        return new Date(data).toLocaleDateString('it-IT', {
+                                            year: 'numeric', month: '2-digit', day: '2-digit',
+                                            hour: '2-digit', minute: '2-digit'
+                                        });
+                                    }
+                                }
+                            ],
+                            responsive: true,
+                            language: {
+                                url: '/i18n/it-IT.json'
+                            }
+                        });
+                    } else {
+                        alert('Errore nel caricamento delle prenotazioni: ' + (data.message || 'Dati non validi.'));
+                    }
+                } catch (error) {
+                    console.error('Errore nel caricamento delle prenotazioni:', error);
+                    alert('Si è verificato un errore nel caricamento delle prenotazioni.');
+                }
+            } else {
+                // Se DataTables è già inizializzato, ricarica i dati
+                dataTableInstance.ajax.reload(null, false);
+            }
+        });
+    }
     // Imposto le date minime per arrivo e partenza a partire da oggi.
     const oggi = new Date();
     const anno = oggi.getFullYear();
@@ -261,7 +351,7 @@ window.onload = function () {
         }
     });
 
-    // Effetto hover sul logo: voglio che si muova un po'.
+    // Effetto hover sul logo: voglio che si muova un un po'.
     const logo = document.getElementById("logo");
     if (logo) {
         logo.addEventListener("mouseenter", function () {
@@ -314,12 +404,16 @@ window.onload = function () {
         }
 
         // Listener per i pulsanti Avanti/Indietro del carosello.
-        prevBtn.addEventListener('click', () => {
-            goToSlide(currentIndex - 1);
-        });
-        nextBtn.addEventListener('click', () => {
-            goToSlide(currentIndex + 1);
-        });
+        if (prevBtn) { // Aggiunto controllo esistenza
+            prevBtn.addEventListener('click', () => {
+                goToSlide(currentIndex - 1);
+            });
+        }
+        if (nextBtn) { // Aggiunto controllo esistenza
+            nextBtn.addEventListener('click', () => {
+                goToSlide(currentIndex + 1);
+            });
+        }
 
         // Carosello automatico: cambia slide ogni 5 secondi.
         let autoSlide = setInterval(() => {
@@ -371,19 +465,15 @@ window.onload = function () {
     const formRegistrazione = document.getElementById("formRegistrazione");
     const formLogin = document.getElementById("formLogin");
 
-    // Simulo un piccolo "database" per gli utenti registrati.
-    const registeredUsers = [
-        { email: "valedb@gmail.com", password: "pass" }
-    ];
+    // All'inizio, nascondo le sezioni che compaiono dopo la scelta "Sì/No".
+    if (verificaClienteSection) verificaClienteSection.style.display = "block"; // Presuppongo che questa sia visibile inizialmente
+    if (sceltaRegistrazioneSection) sceltaRegistrazioneSection.style.display = "none";
+    if (registrazioneSection) registrazioneSection.style.display = "none";
+    if (loginSection) loginSection.style.display = "none";
+    if (sezionePrenotazioneSection) sezionePrenotazioneSection.style.display = "none";
 
+    // Aggiungo un controllo generale per assicurare che gli elementi esistano
     if (btnSi && btnNo && verificaClienteSection && sceltaRegistrazioneSection && registrazioneSection && loginSection && sezionePrenotazioneSection) {
-
-        // All'inizio, nascondo le sezioni che compaiono dopo la scelta "Sì/No".
-        sceltaRegistrazioneSection.style.display = "none";
-        registrazioneSection.style.display = "none";
-        loginSection.style.display = "none";
-        sezionePrenotazioneSection.style.display = "none";
-
 
         btnSi.addEventListener("click", function () {
             // Se dico "Sì", nascondo la domanda e mostro il form di login.
@@ -435,35 +525,58 @@ window.onload = function () {
                 const regEmail = document.getElementById("regEmail").value.trim();
                 const regPassword = document.getElementById("regPassword").value.trim();
 
-                // Controllo il formato dell'email.
+                // Validazione frontend (aggiungo i controlli per i campi vuoti qui per coerenza)
+                if (!regNome || !regEmail || !regPassword) {
+                    alert("Per favore, compila tutti i campi obbligatori per la registrazione.");
+                    return;
+                }
+                if (!/^[A-Za-zÀ-ÿ\s]+$/.test(regNome)) {
+                    alert("Il nome può contenere solo lettere e spazi.");
+                    return;
+                }
                 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(regEmail)) {
                     alert("Per favore, inserisci un'email valida per la registrazione.");
                     return;
                 }
-
-                // Controllo la forza della password.
                 if (regPassword.length < 6 || !/[a-zA-Z]/.test(regPassword) || !/\d/.test(regPassword)) {
                     alert("La password deve contenere almeno 6 caratteri, inclusi lettere e numeri.");
                     return;
                 }
 
-                // Verifico se l'email è già usata (simulazione).
-                if (registeredUsers.some(user => user.email === regEmail)) {
-                    alert("Questa email è già registrata. Per favore, effettua l'accesso o usa un'altra email.");
-                    return;
-                }
+                // Dati da inviare al backend per la registrazione
+                const data = {
+                    name: regNome,
+                    email: regEmail,
+                    password: regPassword
+                };
 
-                if (regNome && regEmail && regPassword) {
-                    // Aggiungo il nuovo utente al mio "database" simulato.
-                    registeredUsers.push({ email: regEmail, password: regPassword });
-                    alert("Registrazione effettuata con successo per " + regNome + "!");
-                    // Dopo la registrazione, mostro il form di prenotazione.
-                    registrazioneSection.style.display = "none";
-                    sezionePrenotazioneSection.style.display = "block";
-                    formRegistrazione.reset();
-                } else {
-                    alert("Per favore, compila tutti i campi obbligatori per la registrazione.");
-                }
+                fetch("http://localhost:3000/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                })
+                    .then(res => {
+                        if (!res.ok) {
+                            return res.json().then(errorData => {
+                                throw new Error(errorData.message || `Errore HTTP: ${res.status}`);
+                            });
+                        }
+                        return res.json();
+                    })
+                    .then(result => {
+                        if (result.success) {
+                            alert("Registrazione effettuata con successo per " + data.name + "!");
+                            formRegistrazione.reset();
+                            registrazioneSection.style.display = "none";
+                            loginSection.style.display = "block";
+                        } else {
+                            alert(result.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Errore durante la registrazione:", error);
+                        alert("Si è verificato un errore: " + error.message);
+                    });
             });
         }
 
@@ -475,25 +588,49 @@ window.onload = function () {
                 const loginEmail = document.getElementById("loginEmail").value.trim();
                 const loginPassword = document.getElementById("loginPassword").value.trim();
 
-                // Controllo il formato dell'email.
+                // Validazione frontend
+                if (!loginEmail || !loginPassword) {
+                    alert("Per favore, inserisci email e password per il login.");
+                    return;
+                }
                 if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginEmail)) {
                     alert("Per favore, inserisci un'email valida per il login.");
                     return;
                 }
 
-                // Simulazione dell'autenticazione.
-                const user = registeredUsers.find(u => u.email === loginEmail && u.password === loginPassword);
+                const data = {
+                    email: loginEmail,
+                    password: loginPassword
+                };
 
-                if (user) {
-                    alert("Login effettuato con successo!");
-                    // Dopo il login, mostro il form di prenotazione.
-                    loginSection.style.display = "none";
-                    sezionePrenotazioneSection.style.display = "block";
-                    formLogin.reset();
-                } else {
-                    alert("Email o password errati. Riprova.");
-                }
+                fetch("http://localhost:3000/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                })
+                    .then(res => {
+                        if (!res.ok) {
+                            return res.json().then(errorData => {
+                                throw new Error(errorData.message || `Errore HTTP: ${res.status}`);
+                            });
+                        }
+                        return res.json();
+                    })
+                    .then(result => {
+                        if (result.success) {
+                            alert("Login effettuato con successo!");
+                            loginSection.style.display = "none";
+                            sezionePrenotazioneSection.style.display = "block";
+                            formLogin.reset();
+                        } else {
+                            alert(result.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Errore durante il login:", error);
+                        alert("Si è verificato un errore: " + error.message);
+                    });
             });
         }
-    }
-};
+    } // Chiusura del blocco 'if (btnSi && btnNo && ...)'
+}; // Chiusura di window.onload

@@ -505,6 +505,147 @@ button:hover {
     background-color: var(--color-secondary-dark);
 }
 
+/* Stile per il contenitore della tabella (inizialmente nascosto) */
+#reservationsTableContainer {
+    display: none;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: var(--color-background-transparent);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 0 10px var(--color-shadow);
+}
+
+/* Stili per il tema scuro del contenitore della tabella */
+.dark-mode #reservationsTableContainer {
+    background-color: rgba(136, 102, 102, 0.4);
+    box-shadow: 0 0 10px rgba(153, 134, 134, 0.5);
+}
+
+#reservationsTableContainer h2 {
+    color: var(--color-secondary)
+}
+
+.dark-mode #reservationsTableContainer h2 {
+    color: var(--color-primary)
+}
+
+/* Stili per il bottone di visualizzazione della tabella */
+#showReservationsBtn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+#showReservationsBtn:hover {
+    background-color: var(--color-secondary-dark);
+}
+
+/* Stili per il bottone in Dark Mode */
+.dark-mode #showReservationsBtn {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+    /* Testo scuro per contrasto in dark mode */
+}
+
+.dark-mode #showReservationsBtn:hover {
+    background-color: var(--color-secondary-dark-dark-mode);
+}
+
+/* Stili per le sezioni con classe content-box */
+.content-box {
+    background-color: var(--color-background-transparent);
+    border-radius: var(--border-radius-lg);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px var(--color-shadow);
+}
+
+.dark-mode .content-box {
+    background-color: rgba(165, 125, 125, 0.4);
+    box-shadow: 0 0 10px rgba(66, 54, 54, 0.5);
+}
+
+/* --- STILI SPECIFICI PER LA TABELLA DATATABLES (Bordi, Testo, Header, Righe) --- */
+
+/* Colore del testo della tabella generale per modalità chiara */
+#reservationsTable {
+    color: var(--color-primary);
+    /* Testo scuro per light mode */
+}
+
+/* Colore del testo della tabella generale per modalità scura */
+.dark-mode #reservationsTable {
+    color: var(--color-primary);
+    /* Testo chiaro per dark mode */
+}
+
+.dt-search,
+.dt-length,
+.dt-info,
+.dt-paging.paging_full_numbers {
+    color: var(--color-primary) !important
+}
+
+/* Bordi delle celle della tabella e allineamento */
+#reservationsTable th,
+#reservationsTable td {
+    border: 1px solid var(--color-border);
+    /* Colore bordi standard */
+    padding: 8px;
+    text-align: left;
+}
+
+.dark-mode #reservationsTable th,
+.dark-mode #reservationsTable td {
+    border: 1px solid var(--color-border-dark-mode);
+    /* Colore bordi per dark mode */
+}
+
+/* Stile per l'header della tabella in modalità chiara */
+#reservationsTable thead th {
+    background-color: var(--color-secondary);
+    /* Sfondo dell'header */
+    color: var(--color-primary);
+    /* Testo dell'header chiaro */
+}
+
+/* Stile per l'header della tabella in modalità scura */
+.dark-mode #reservationsTable thead th {
+    background-color: var(--color-secondary);
+    /* Sfondo dell'header dark mode */
+    color: var(--color-primary-dark);
+    /* Testo dell'header scuro per contrasto */
+}
+
+/* Stile per righe alterne (striped effect) in modalità chiara */
+#reservationsTable tbody tr:nth-child(even) {
+    background-color: var(--color-background-transparent);
+    /* Riga pari */
+}
+
+/* Stile per righe alterne (striped effect) in modalità scura */
+.dark-mode #reservationsTable tbody tr:nth-child(even) {
+    background-color: rgba(167, 167, 167, 0.2);
+    /* Riga pari in dark mode (più scura) */
+}
+
+#reservationsTable tbody tr:nth-child(odd) {
+    background-color: transparent;
+    /* Riga dispari (default o trasparente) */
+}
+
+.dark-mode #reservationsTable tbody tr:nth-child(odd) {
+    background-color: rgba(131, 103, 103, 0.1);
+    /* Riga dispari in dark mode (leggermente scura) */
+}
+
 #audioDiSfondo {
     display: block;
     margin: var(--spacing-xl) auto var(--spacing-lg) auto;
@@ -572,6 +713,16 @@ footer {
     .boxCorpoDelTesto {
         width: 90%;
         padding: var(--spacing-md);
+    }
+
+    #reservationsTableContainer {
+        overflow-x: auto;
+        /* Abilita lo scroll orizzontale se la tabella è troppo larga */
+    }
+
+    /* Riduci la dimensione del font per la tabella su schermi piccoli */
+    #reservationsTable {
+        font-size: 0.85em;
     }
 
     #audioDiSfondo {

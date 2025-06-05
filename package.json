@@ -1,0 +1,28 @@
+{
+  "name": "agriturismovalleroberta",
+  "version": "1.0.0",
+  "description": "![Logo Agriturismo Valle Roberta](Logo/logo.png) \r Sito web dimostrativo per un agriturismo immaginario, creato per mettere in pratica le competenze di sviluppo web front-end con HTML, CSS, JavaScript (Vanilla JS e jQuery) e Bootstrap.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ValentinaDeBartolo/AgriturismoValleRoberta.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ValentinaDeBartolo/AgriturismoValleRoberta/issues"
+  },
+  "homepage": "https://github.com/ValentinaDeBartolo/AgriturismoValleRoberta#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "datatables.net-dt": "^2.3.1",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "pg": "^8.16.0"
+  }
+}
